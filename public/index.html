@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduRec | AI-Powered Course Recommendation System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- VIEW 1: FIRST THING SEEN IS THE LOGIN & INTERESTS PAGE -->
+  <main id="login-view" class="view-container active">
+    <div class="auth-card">
+      <div class="brand-header">
+        <div class="brand-badge">Intelligent Course Discovery</div>
+        <h1 class="brand-title">EduRec</h1>
+      </div>
+
+      <form id="onboarding-form">
+        <!-- Basic User Details & Engineering Branch -->
+        <div class="form-section">
+          <label class="section-label">1. Student Information & Discipline</label>
+          <div class="input-row">
+            <div class="input-group">
+              <label for="student-name">Full Name</label>
+              <input type="text" id="student-name" placeholder="e.g. Alex Sharma" value="Alex Sharma" required>
+            </div>
+            <div class="input-group">
+              <label for="student-email">Email Address</label>
+              <input type="email" id="student-email" placeholder="alex@university.edu" value="alex@university.edu" required>
+            </div>
+          </div>
+          <div class="input-row" style="margin-top: 14px;">
+            <div class="input-group" style="width: 100%;">
+              <label for="engineering-branch">Engineering Discipline / Major</label>
+              <select id="engineering-branch" required>
+                <option value="Mechanical & Automotive Engineering">Mechanical & Automotive Engineering</option>
+                <option value="Biotechnology & Biomedical Engineering">Biotechnology & Biomedical Engineering</option>
+                <option value="Computer Science & Information Technology" selected>Computer Science & Information Technology</option>
+                <option value="Electrical & Electronics Engineering">Electrical & Electronics Engineering (ECE / EEE)</option>
+                <option value="Civil & Infrastructure Engineering">Civil & Infrastructure Engineering</option>
+                <option value="Chemical & Materials Engineering">Chemical & Materials Engineering</option>
+                <option value="Aerospace & Aeronautical Engineering">Aerospace & Aeronautical Engineering</option>
+                <option value="Robotics & Mechatronics Engineering">Robotics & Mechatronics Engineering</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Career Target & Experience Level -->
+        <div class="form-section">
+          <label class="section-label">2. Target Role & Experience Level</label>
+          <div class="input-row">
+            <div class="input-group">
+              <label for="target-role">What is your primary career goal?</label>
+              <select id="target-role" required>
+                <optgroup label="Mechanical & Automotive Engineering">
+                  <option value="Mechanical Design & CAD Engineer">Mechanical Design & CAD Engineer</option>
+                  <option value="Thermal & Fluid Systems (CFD) Engineer">Thermal & Fluid Systems (CFD) Engineer</option>
+                  <option value="Automotive & Electric Vehicle (EV) Engineer">Automotive & Electric Vehicle (EV) Engineer</option>
+                </optgroup>
+                <optgroup label="Biotechnology & Biomedical Engineering">
+                  <option value="Bioinformatics & Computational Biologist">Bioinformatics & Computational Biologist</option>
+                  <option value="Bioprocess & Fermentation Engineer">Bioprocess & Fermentation Engineer</option>
+                  <option value="Biomedical Devices & Instrumentation Engineer">Biomedical Devices & Instrumentation Engineer</option>
+                </optgroup>
+                <optgroup label="Computer Science & Information Technology">
+                  <option value="Data Scientist" selected>Data Scientist / AI Specialist</option>
+                  <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                  <option value="Full Stack Web Developer">Full Stack Web Developer</option>
+                  <option value="Cloud Solutions Architect">Cloud & DevOps Architect</option>
+                  <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                  <option value="Mobile App Developer">Mobile App Developer</option>
+                </optgroup>
+                <optgroup label="Electrical & Electronics (ECE / EEE)">
+                  <option value="VLSI & Embedded Systems Engineer">VLSI & Embedded Systems Engineer</option>
+                  <option value="Power Systems & Renewable Energy Engineer">Power Systems & Renewable Energy Engineer</option>
+                  <option value="IoT & Hardware Systems Engineer">IoT & Hardware Systems Engineer</option>
+                </optgroup>
+                <optgroup label="Civil & Infrastructure Engineering">
+                  <option value="Structural Analysis & BIM Engineer">Structural Analysis & BIM Engineer</option>
+                  <option value="Transportation & Infrastructure Engineer">Transportation & Infrastructure Engineer</option>
+                  <option value="Environmental & Water Resources Engineer">Environmental & Water Resources Engineer</option>
+                </optgroup>
+                <optgroup label="Chemical & Materials Engineering">
+                  <option value="Chemical Process & Plant Design Engineer">Chemical Process & Plant Design Engineer</option>
+                  <option value="Materials Science & Nanotechnology Engineer">Materials Science & Nanotechnology Engineer</option>
+                </optgroup>
+                <optgroup label="Aerospace & Aeronautical Engineering">
+                  <option value="Aerospace & Propulsion Engineer">Aerospace & Propulsion Engineer</option>
+                </optgroup>
+                <optgroup label="Robotics & Mechatronics Engineering">
+                  <option value="Robotics & Autonomous Systems Engineer">Robotics & Autonomous Systems Engineer</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Current Experience Level</label>
+              <div class="pill-group" id="experience-levels">
+                <button type="button" class="pill-btn active" data-level="Beginner">Beginner</button>
+                <button type="button" class="pill-btn" data-level="Intermediate">Intermediate</button>
+                <button type="button" class="pill-btn" data-level="Advanced">Advanced</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills of Interest -->
+        <div class="form-section">
+          <label class="section-label">3. Skills You Want to Learn</label>
+          <div class="skills-filter-tabs" id="skills-filter-tabs">
+            <button type="button" class="skill-filter-pill active" data-cat="All">All Disciplines</button>
+            <button type="button" class="skill-filter-pill" data-cat="CS">CS & IT</button>
+            <button type="button" class="skill-filter-pill" data-cat="Mechanical">Mechanical</button>
+            <button type="button" class="skill-filter-pill" data-cat="Biotech">Biotech</button>
+            <button type="button" class="skill-filter-pill" data-cat="Electrical">Electrical / ECE</button>
+            <button type="button" class="skill-filter-pill" data-cat="Civil">Civil</button>
+            <button type="button" class="skill-filter-pill" data-cat="Chemical">Chemical / Mat</button>
+            <button type="button" class="skill-filter-pill" data-cat="Aerospace">Aerospace</button>
+            <button type="button" class="skill-filter-pill" data-cat="Robotics">Robotics</button>
+          </div>
+          <p class="section-desc">Select key competencies you want to acquire (click to select):</p>
+          <div id="skills-cloud" class="skills-cloud">
+            <!-- Dynamically populated skills -->
+          </div>
+        </div>
+
+        <!-- Free-text Learning Goals -->
+        <div class="form-section">
+          <label class="section-label" for="interests-text">4. Specific Learning Goals / Interests</label>
+          <textarea id="interests-text" rows="3" placeholder="e.g. Master SolidWorks CAD and FEA with ANSYS, or Biopython sequence analysis and CRISPR, or Full Stack React & Cloud...">I want to master Python programming, analyze datasets with Pandas, and build predictive machine learning models.</textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btn-submit-login" class="btn-primary">
+          <span>Sign In & Generate Recommendations</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- VIEW 2: REAL-TIME COURSE RECOMMENDATIONS DASHBOARD -->
+  <main id="dashboard-view" class="view-container">
+    <!-- Navbar Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="app-logo">EduRec</div>
+        <div class="user-chip">
+          <div class="avatar" id="avatar-initials">AS</div>
+          <div class="user-meta">
+            <span class="user-name" id="display-user-name">Alex Sharma</span>
+            <span class="user-role" id="display-target-role">Data Scientist</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button id="btn-edit-profile" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span>Change Goals / Sign Out</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <!-- Student Profile Card -->
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-avatar-large" id="profile-avatar-large">AS</div>
+          <div class="profile-main-info">
+            <div class="profile-name-row">
+              <h2 id="profile-display-name">Alex Sharma</h2>
+              <span class="profile-status-badge">New Student • Cold-Start Profile</span>
+            </div>
+            <p class="profile-email" id="profile-display-email">alex@university.edu</p>
+            <div class="profile-tags-row">
+              <span class="profile-tag">Branch: <strong id="profile-display-branch">Computer Science & IT</strong></span>
+              <span class="profile-tag">Goal: <strong id="profile-display-role">Data Scientist</strong></span>
+              <span class="profile-tag">Level: <strong id="profile-display-level">Beginner</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-details-grid">
+          <div class="profile-detail-box">
+            <span class="detail-label">Your Target Skills:</span>
+            <div id="profile-skills-tags" class="profile-skills-tags"></div>
+          </div>
+          <div class="profile-detail-box">
+            <span class="detail-label">AI Cold-Start Solution:</span>
+            <p class="cold-start-note">
+              Personalized via <strong>TF-IDF Vector Space Model</strong> & <strong>Cosine Similarity</strong> on your onboarding criteria.
+            </p>
+          </div>
+        </div>
+
+        <!-- Career Market & Decision Metrics (Salary LPA, Time to Master, 0 to Job-Ready, Demand & Supply, AI Security) -->
+        <div class="career-metrics-bar">
+          <div class="metric-card">
+            <div class="metric-content">
+              <span class="metric-title">Expected Salary (LPA)</span>
+              <div class="metric-val" id="metric-salary-range">₹8.5 - 26 LPA</div>
+              <div class="metric-sub" id="metric-salary-avg">Avg: ₹16.8 LPA • Entry: ₹8.5-14 LPA</div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-content">
+              <span class="metric-title">Time to Master Skill</span>
+              <div class="metric-val" id="metric-time-months">6 - 7 Months</div>
+              <div class="metric-sub" id="metric-time-hours">10 - 14 hrs/week • ~320 total hrs</div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-content">
+              <span class="metric-title">Future Demand & Supply</span>
+              <div class="metric-val" id="metric-demand-growth" style="color: var(--light-blue-accent);">+24% 5-Yr Growth</div>
+              <div class="metric-sub" id="metric-market-supply">Surging Demand • Talent Deficit</div>
+            </div>
+          </div>
+
+          <div class="metric-card highlight-card-ai" id="metric-ai-card">
+            <div class="metric-content">
+              <span class="metric-title">AI Job Security Rating</span>
+              <div class="metric-val" id="metric-ai-threat-val">91% AI-Secure</div>
+              <div class="metric-sub" id="metric-ai-threat-sub">Low AI Threat • High Human Moat</div>
+            </div>
+            <button type="button" class="btn-ai-threat-toggle" id="btn-toggle-ai-threat">
+              <span>AI Threat Intel</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+
+          <div class="metric-card highlight-card">
+            <div class="metric-content">
+              <span class="metric-title">0 to Job-Ready Track</span>
+              <div class="metric-val" id="metric-job-status">Level 0 to Job-Ready</div>
+              <div class="metric-sub">4 Practical Milestone Capstones</div>
+            </div>
+            <button type="button" class="btn-readiness-toggle" id="btn-toggle-readiness">
+              <span>Milestones</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Expandable AI Threat & Future Demand Intelligence Drawer -->
+        <div class="ai-threat-drawer" id="ai-threat-drawer" style="display: none;">
+          <div class="drawer-header-flex">
+            <div>
+              <h3 class="drawer-heading">AI Job Security & Future Demand Outlook for <span id="ai-drawer-role-text">Data Scientist</span></h3>
+              <p class="drawer-sub">Objective analysis of automation risk, human moat defensibility, and 5-year industry hiring projections.</p>
+            </div>
+            <div class="ai-score-badge-box">
+              <div class="ai-score-circle" id="ai-score-circle">88%</div>
+              <span class="ai-score-caption">AI Security Index</span>
+            </div>
+          </div>
+
+          <div class="ai-intel-grid">
+            <!-- Left: Human Moat & Irreplaceability -->
+            <div class="ai-intel-card">
+              <div class="intel-card-header">
+                <div class="intel-icon">🛡️</div>
+                <div>
+                  <h4>Why Human Engineers Are Irreplaceable (Human Moat)</h4>
+                  <p>Core responsibilities, physical testing, and legal liabilities AI cannot execute:</p>
+                </div>
+              </div>
+              <ul class="human-moat-list" id="human-moat-container">
+                <!-- Dynamically populated human moat points -->
+              </ul>
+            </div>
+
+            <!-- Right: Future Demand & Supply Dynamics -->
+            <div class="ai-intel-card">
+              <div class="intel-card-header">
+                <div class="intel-icon">📈</div>
+                <div>
+                  <h4>Future Job Market Demand & Supply Outlook</h4>
+                  <p>5-year industry expansion trajectory, hiring velocity, and talent deficit:</p>
+                </div>
+              </div>
+              <div class="market-dynamics-box">
+                <div class="market-dynamic-row">
+                  <span class="m-label">5-Year Projected Growth:</span>
+                  <span class="m-val" id="intel-growth-rate">+24%</span>
+                </div>
+                <div class="market-dynamic-row">
+                  <span class="m-label">Industry Demand:</span>
+                  <span class="m-val" id="intel-demand-status">Surging Global Demand</span>
+                </div>
+                <div class="market-dynamic-row">
+                  <span class="m-label">Talent Supply Deficit:</span>
+                  <span class="m-val" id="intel-supply-status">Acute Talent Shortage</span>
+                </div>
+                <div class="market-dynamic-row">
+                  <span class="m-label">Talent Scarcity Score:</span>
+                  <span class="m-val" id="intel-shortage-index">8.8 / 10</span>
+                </div>
+              </div>
+              <div class="intel-market-summary" id="intel-market-summary">
+                <!-- Dynamic market summary -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom: AI Copilot Advantage vs Routine Automation -->
+          <div class="ai-comparison-strip">
+            <div class="ai-strip-col">
+              <span class="strip-tag automates">What AI Automates in This Role:</span>
+              <p id="intel-ai-automates"></p>
+            </div>
+            <div class="ai-strip-divider"></div>
+            <div class="ai-strip-col">
+              <span class="strip-tag copilot">How AI Empowers You (Your Superpower):</span>
+              <p id="intel-ai-copilot"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expandable 0 to Job-Ready Milestones Drawer -->
+        <div class="readiness-drawer" id="readiness-drawer" style="display: none;">
+          <h3 class="drawer-heading">0 to Job-Ready Path for <span id="readiness-role-text">Data Scientist</span></h3>
+          <p class="drawer-sub">A verified progression to take you from absolute zero to employable industry professional:</p>
+          <div class="readiness-milestones-grid" id="readiness-milestones-container">
+            <!-- Dynamically populated milestones -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Navigation Tabs -->
+      <div class="dashboard-tabs">
+        <button type="button" class="dash-tab-btn active" id="tab-recs-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 16 12 12 8"></polygon></svg>
+          <span>Recommended Courses</span>
+        </button>
+        <button type="button" class="dash-tab-btn" id="tab-roadmap-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"></circle><line x1="12" y1="8" x2="12" y2="12"></line><circle cx="6" cy="15" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M12 12l-6 3m6-3l6 4"></path></svg>
+          <span>Visual Career Roadmap</span>
+        </button>
+        <button type="button" class="dash-tab-btn" id="tab-comparison-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"></path></svg>
+          <span>Compare Free vs. Paid Courses</span>
+        </button>
+      </div>
+
+      <!-- PANEL 1: COURSE RECOMMENDATIONS -->
+      <section id="panel-recs" class="tab-panel active">
+        <!-- Controls: Search & Category Filter & Pricing Filter -->
+        <div class="controls-bar">
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="live-search-input" placeholder="Search recommended courses by title, skill, or keyword...">
+          </div>
+
+          <div class="pricing-toggle-group" id="pricing-filter-group">
+            <button class="pricing-pill active" data-pricing="all">All Courses</button>
+            <button class="pricing-pill" data-pricing="free">Free to Audit</button>
+            <button class="pricing-pill" data-pricing="paid">Paid Certificates</button>
+          </div>
+
+          <div class="filter-pills" id="domain-filters">
+            <button class="filter-btn active" data-domain="All">All Disciplines</button>
+            <button class="filter-btn" data-domain="Mechanical & Automotive Engineering">Mechanical</button>
+            <button class="filter-btn" data-domain="Biotechnology & Biomedical Engineering">Biotech</button>
+            <button class="filter-btn" data-domain="Computer Science & Information Technology">CS & IT</button>
+            <button class="filter-btn" data-domain="Electrical & Electronics Engineering">Electrical / ECE</button>
+            <button class="filter-btn" data-domain="Civil & Infrastructure Engineering">Civil</button>
+            <button class="filter-btn" data-domain="Chemical & Materials Engineering">Chemical</button>
+            <button class="filter-btn" data-domain="Aerospace & Aeronautical Engineering">Aerospace</button>
+            <button class="filter-btn" data-domain="Robotics & Mechatronics Engineering">Robotics</button>
+          </div>
+        </div>
+
+        <!-- Results Count & Live Stats -->
+        <div class="results-header">
+          <span class="results-count" id="results-count-text">Showing Top Recommended Courses</span>
+          <span class="live-indicator"><span class="pulse-dot"></span> Live Real-Time Scoring</span>
+        </div>
+
+        <!-- Course Cards Grid -->
+        <div class="courses-grid" id="courses-container">
+          <!-- Dynamically injected course cards -->
+        </div>
+      </section>
+
+      <!-- PANEL 2: INTERACTIVE VISUAL LEARNING ROADMAP -->
+      <section id="panel-roadmap" class="tab-panel">
+        <div class="roadmap-header">
+          <div>
+            <h2 id="roadmap-title" class="roadmap-title">Career Learning Roadmap</h2>
+            <p id="roadmap-desc" class="roadmap-desc">Structured chronological guide mapping prerequisites, core competencies, and matching courses.</p>
+          </div>
+          <div class="roadmap-badge-legend">
+            <span class="legend-pill">1. Foundations</span>
+            <span class="legend-arrow">→</span>
+            <span class="legend-pill">2. Core</span>
+            <span class="legend-arrow">→</span>
+            <span class="legend-pill">3. Advanced</span>
+          </div>
+        </div>
+
+        <!-- Vertical Connecting Timeline Tree -->
+        <div class="roadmap-tree" id="roadmap-tree-container">
+          <!-- Dynamically populated roadmap steps -->
+        </div>
+      </section>
+
+      <!-- PANEL 3: FREE VS. PAID COURSE COMPARISON MATRIX -->
+      <section id="panel-comparison" class="tab-panel">
+        <div class="comparison-overview-card">
+          <div class="comparison-header-content">
+            <h2>Free vs. Paid Course Comparison</h2>
+            <p>Make an informed decision based on ratings, review counts, hands-on features, and career return on investment (ROI).</p>
+          </div>
+          <div class="comparison-stats-row">
+            <div class="c-stat-box">
+              <span class="c-stat-label">Free / Audit Options</span>
+              <span class="c-stat-val">★ 4.81 Avg Rating</span>
+              <span class="c-stat-sub">14 Courses Available</span>
+            </div>
+            <div class="c-stat-box">
+              <span class="c-stat-label">Paid Certificates</span>
+              <span class="c-stat-val">★ 4.78 Avg Rating</span>
+              <span class="c-stat-sub">6 Courses Available</span>
+            </div>
+            <div class="c-stat-box">
+              <span class="c-stat-label">Student Recommendation</span>
+              <span class="c-stat-val" style="color: var(--light-blue-accent);">Audit First, Certify Later</span>
+              <span class="c-stat-sub">Zero financial risk</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="comparison-cards-grid">
+          <!-- Free Column -->
+          <div class="comparison-col">
+            <div class="col-header-box free-header">
+              <div class="col-pill">Free / Audit Tier</div>
+              <h3>Audit Video Lectures & Assignments</h3>
+              <div class="price-large">₹0 <span class="price-cycle">Forever Free</span></div>
+              <p>Ideal for self-motivated learners wanting knowledge and skills without upfront certification fees.</p>
+            </div>
+            <div class="comparison-features-list">
+              <div class="feat-item check">✔ Full access to all lecture videos & readings</div>
+              <div class="feat-item check">✔ Discussion forum participation with peers</div>
+              <div class="feat-item check">✔ Practice quizzes & in-browser problem sets</div>
+              <div class="feat-item cross">✖ Shareable LinkedIn / Resume certificate</div>
+              <div class="feat-item cross">✖ Human mentor code review & grading</div>
+            </div>
+            <h4 class="comparison-sub-heading">Top Rated Free Courses:</h4>
+            <div id="free-courses-compare-list" class="compare-courses-list"></div>
+          </div>
+
+          <!-- Paid Column -->
+          <div class="comparison-col">
+            <div class="col-header-box paid-header">
+              <div class="col-pill">Paid / Verified Certificate</div>
+              <h3>Professional Specializations & Nanodegrees</h3>
+              <div class="price-large">₹499 - ₹3,200 <span class="price-cycle">one-time / monthly</span></div>
+              <p>Ideal for career switchers seeking employer-recognized certificates and guided portfolio projects.</p>
+            </div>
+            <div class="comparison-features-list">
+              <div class="feat-item check">✔ Everything in Free tier included</div>
+              <div class="feat-item check">✔ Verified employer-shareable digital certificate</div>
+              <div class="feat-item check">✔ Graded programming assignments & capstones</div>
+              <div class="feat-item check">✔ Hands-on Cloud lab environments (AWS / GCP)</div>
+              <div class="feat-item check">✔ Portfolio projects for GitHub & resume</div>
+            </div>
+            <h4 class="comparison-sub-heading">Top Rated Paid Courses:</h4>
+            <div id="paid-courses-compare-list" class="compare-courses-list"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
