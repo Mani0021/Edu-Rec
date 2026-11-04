@@ -125,7 +125,7 @@ python3 server.py
 ### 4. Open in Browser
 Open your browser and navigate to:
 ```
-http://localhost:8080
+http://localhost:8081
 ```
 
 ---
